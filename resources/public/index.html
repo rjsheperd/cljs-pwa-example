@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    <title>Service Worker Example</title>
+  </head>
+  <body>
+    <h1>Service Worker Example</h1>
+    <p>Check the console for service worker loading status.</p>
+    <script type="text/javascript" src="/cljs/shared.js"></script>
+    <script type="text/javascript" src="/cljs/main.js"></script>
+    <script>
+    // Check if Service Workers are supported
+      if ('serviceWorker' in navigator) {
+	  window.addEventListener('load', function() {
+	      navigator.serviceWorker.register('/sw.js', {scope: "/"})
+		  .then(function(registration) {
+		      // Registration was successful
+		      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+		  }, function(err) {
+		      // Registration failed :(
+		      console.log('ServiceWorker registration failed: ', err);
+		  });
+	  });
+      }
+    </script>
+</body>
+</html>

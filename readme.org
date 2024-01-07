@@ -1,0 +1,50 @@
+#+TITLE: CLJS + Web Worker + Progressive Web App Example
+#+AUTHOR: RJ Sheperd
+
+_Disclaimer: Very much a work-in-progress. I have some idea what I'm
+doing, but would appreciate any and all feedback!_
+
+** Uses:
+
+- [[https://developer.chrome.com/docs/workbox/][Workbox]] for ServiceWorkers
+- [[bun.sh][Bun]] for super fast Node runtime
+- [[https://shadow-cljs.github.io/docs/UsersGuide.html][Shadow CLJS]] for compiling ClojureScript to JS
+
+** Development Setup
+
+This will get you set up with a development environment where you can
+use a REPL and perform interactive development.
+
+1. Install Bun
+#+BEGIN_SRC bash
+curl -fsSL https://bun.sh/install | bash # For Mac/Linux/WSL Users
+#+END_SRC
+
+2. Install dependencies (~bun install~)
+
+3. Start ~shadow-cljs~
+   - with Emacs, visit [[file:deps.edn][deps.edn]] and run ~cider-jack-in-cljs~
+   - w/o Emacs, run ~bunx shadow-cljs watch app~
+
+4. Visit http://localhost:8000
+
+** Release
+1. Create an Shadow CLJS release: ~bunx shadow-cljs release app~
+2. Create a ServiceWorker using the latest release: ~bunx workbox generateSW workbox-config.js~
+3. Tarball the files: ~tar czf app.tar.gz --directory resources/public .~
+4. Deploy to your favorite CDN!
+
+** Motivation
+
+A Progressive Web App (PWA) is one of the closest ways can get to write code
+once, run everywhere. Using Browser-native languages (HTML/JS/CSS),
+and a few tweaks, you can have an app that runs natively on Mobile (iOS, Android) and Desktop (via
+[[https://support.google.com/chrome/answer/9658361?hl=en&co=GENIE.Platform%3DDesktop][Chrome]], [[https://learn.microsoft.com/en-us/microsoft-edge/progressive-web-apps-chromium/ux#installing-a-pwa][Edge]], [[https://addons.mozilla.org/en-US/firefox/addon/pwas-for-firefox/][Firefox]], and [[https://support.apple.com/en-us/104996][Safari]]).
+
+Want to take it the next leve? [[https://docs.pwabuilder.com/#/builder/quick-start][PWABuilder]] can allow you to upload your app to various App Stores.
+
+However, I personally don't enjoy working in JavaScript. So the
+obvious question I had was: how do I get this working with
+ClojureScript? This is an experiment in getting that up and running.
+
+BONUS: This also features a [[https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers][Web Worker]] which can perform background tasks.

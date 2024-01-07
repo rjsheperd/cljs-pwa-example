@@ -1,0 +1,20 @@
+{:source-paths ["src/cljs"]
+ :dependencies [[jtk-dvlp/cljs-workers "1.1.2"]]
+ :dev-http {8000 "resources/public"}
+ :builds
+ {:app
+  {:target :browser
+   :output-dir "resources/public/cljs"
+   :asset-path "/cljs"
+   :modules
+   {:shared
+    {:entries []}
+
+    :main
+    {:init-fn    pwa.main/init
+     :depends-on #{:shared}}
+
+    :worker
+    {:init-fn    pwa.worker/init
+     :web-worker true
+     :depends-on #{:shared}}}}}}
